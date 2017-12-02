@@ -1,10 +1,10 @@
 'use strict'
-/* global fetch */
 
 const baseUrl = 'https://min-api.cryptocompare.com/data/'
+const fetch = require('fetch-retry')
 
 function fetchJSON (url) {
-  return fetch(url)
+  return fetch(url, { retries: 3, retryDelay: 300 })
     .then(res => res.json())
     .then(body => {
       if (body.Response === 'Error') throw body.Message
