@@ -12,6 +12,11 @@ function fetchJSON (url) {
     })
 }
 
+function coinList () {
+  const url = `${baseUrl}all/coinlist`
+  return fetchJSON(url)
+}
+
 function price (fsym, tsyms, options) {
   options = options || {}
   let url = `${baseUrl}price?fsym=${fsym}&tsyms=${tsyms}`
@@ -47,8 +52,8 @@ function priceHistorical (fsym, tsyms, time, options) {
   return fetchJSON(url).then(result => result[fsym])
 }
 
-function generateAvg (fsym, tsym, markets, tryConversion) {
-  let url = `${baseUrl}generateAvg?fsym=${fsym}&tsym=${tsym}&markets=${markets}`
+function generateAvg (fsym, tsym, e, tryConversion) {
+  let url = `${baseUrl}generateAvg?fsym=${fsym}&tsym=${tsym}&e=${e}`
   if (tryConversion === false) url += '&tryConversion=false'
   return fetchJSON(url).then(result => result.RAW)
 }
@@ -108,6 +113,7 @@ function dateToTimestamp (date) {
 }
 
 module.exports = {
+  coinList,
   price,
   priceMulti,
   priceFull,
